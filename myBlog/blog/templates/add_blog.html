@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{%block content%}
+<br><br>
+<div class="container">
+        <span class="d-block p-2 bg-primary text-white text-center"> Create Blog</span>
+</div><br><br>
+
+<div class="container">
+<form method="POST" autocomplete="off">  
+        {% csrf_token %}
+        {{form|crispy}}
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-lg btn-primary" type="Submit">Add</button>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'index' %}" class="btn btn-secondary btn-lg">Back To Home</a>
+            </div>
+        </div>
+
+</form>
+
+</div
+{% endblock content %}
