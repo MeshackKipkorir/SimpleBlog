@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container login">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-login">
+            <h4>Welcome back.</h4>
+            <form method="POST" action="{% url 'user_login' %}">
+            {% csrf_token %}
+            <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username" />
+            </br>
+            <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+            </br>
+            <div class="wrapper">
+            <span class="group-btn">     
+                <input type="submit" name="" value="login" class="btn btn-primary">
+            </span>
+            </div>
+            </div>
+            </form>
+        
+        </div>
+    </div>
+</div>
+{% endblock content %}
