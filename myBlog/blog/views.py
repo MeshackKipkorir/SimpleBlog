@@ -15,7 +15,7 @@ def index(request):
     context = {'content':content}
     return render(request,'index.html',context)
 
-@login_required
+
 def add_blog(request):
     form = AddBlogForm()
     
@@ -38,19 +38,19 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profileForm = UserProfileInfoForm(data = request.POST)
 
-        if user_form.is_valid and profileForm.is_valid():
+        if user_form.is_valid() and profileForm.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
             profile = profileForm.save(commit=False)
             profile.user = user
-            if 'profile_pic' in request.FILES['profile_pic']:
+            if 'profile_pic' in request.POST.get('profile_pic',False):
                 print('profile pic present')
                 profile.profile_pic = request.FILES['profile_pic']
 
-            profile.Save()
+            profile.save()
             registered = True
-        
+            return redirect('user_login')
         else:
             print(UserForm.errors,profileForm.errors)
 
@@ -71,7 +71,7 @@ def user_login(request):
         password = request.POST.get('password')
         user = authenticate(username=username,password=password)
         if user:
-            if user.is_active():
+            if user.is_active:
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
@@ -81,3 +81,7 @@ def user_login(request):
     else:
         return render(request,'login.html')
         
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
